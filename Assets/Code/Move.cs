@@ -22,10 +22,17 @@ public class Move : MonoBehaviour
     {
           Vector2 player= new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
        rb.linearVelocity = player.normalized * speed;
-        if (player.x > 0 && !isFacingRight)
-            Flip();
-        else if (player.x < 0 && isFacingRight)
-            Flip();
+        if (player.magnitude > 0)
+        {
+            rb.linearVelocity = player.normalized * speed;
+
+            if (player.x > 0 && !isFacingRight) Flip();
+            else if (player.x < 0 && isFacingRight) Flip();
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero; // ✨ dừng ngay lập tức
+        }
     }
     void Flip()
     {
